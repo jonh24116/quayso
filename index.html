@@ -1,219 +1,157 @@
-<!DOCTYPE html>
 <html lang="vi">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Quay số may mắn - Optimized</title>
+<title>Quay số may mắn</title>
 <link href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi8pHLdb-0jepP85akqsv5ii8RxfctsrBw2m2g9zUCNhGxa9PkhJFoIDzPpfHHn-IV74jthZ92HjxBDGOymu6hJuIbRe5rjOHQW2JGXdkMOu57k6B3O1hVx3TY_smVtjZop2ZMB1fbwCaO3dQ40lCMkamh-Z_UniYStoQ-_ixlXmKJRuax_D5qmW5DyUTZH/s16000/logo11.webp" rel="icon">
 <style>
-    :root {
-        --gold: #ffd700;
-        --blue: #2196f3;
-    }
-    body {
-        margin: 0;
-        min-height: 100vh;
-        background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.9)), 
-                    url(https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEioZd2PmsqVMQJAAzsPXTFXpDrYTm0zqOLMAe9ihkMt1hyphenhyphenndub198Aj6NHksIVNXpY2q1u0VlQXEvqJQQuoWZhBhRBtO1r0pKj1E5obVl9fdbsOpYZ7kMhpUegYmD9MitB3dVx5-vzvONnYC4KdAry4VXo2PwtD-3YN4Ukjz-crJDMn-PokRD-bof0MZ6HR/s1600/xs.webp) center/cover fixed;
-        color: #fff;
-        font-family: 'Segoe UI', system-ui, sans-serif;
-        overflow-x: hidden;
-    }
-    .container { text-align: center; padding: 20px; }
-    .logo img { height: clamp(100px, 20vh, 250px); filter: drop-shadow(0 0 15px var(--gold)); }
-
-    /* Màn hình hiển thị số đang quay */
-    .number-display {
-        position: fixed;
-        inset: 0;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-size: clamp(80px, 15vw, 240px);
-        font-weight: 900;
-        color: var(--gold);
-        text-shadow: 6px 6px 0 #000;
-        transition: opacity 0.5s, transform 0.5s;
-        z-index: 5;
-    }
-    .digit { width: 1.2ch; text-align: center; display: inline-block; }
-    .hidden { opacity: 0; transform: scale(0.6); pointer-events: none; }
-
-    /* Lưới hiển thị kết quả 6 số */
-    .numbers-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-        gap: 20px;
-        max-width: 1000px;
-        margin: 50px auto;
-        padding: 20px;
-        opacity: 0;
-        transform: scale(0.8);
-        transition: 0.5s;
-    }
-    .grid-zoom { opacity: 1; transform: scale(1); }
-    .number-item {
-        background: rgba(255, 215, 0, 0.15);
-        border: 2px solid var(--gold);
-        padding: 20px 0;
-        border-radius: 18px;
-        font-size: 40px;
-        font-weight: 900;
-        text-align: center;
-        backdrop-filter: blur(5px);
-    }
-
-    .pop-effect { animation: itemPop 0.6s cubic-bezier(.175,.885,.32,1.275) forwards; }
-    @keyframes itemPop {
-        0% { transform: scale(0); opacity: 0; }
-        100% { transform: scale(1); opacity: 1; }
-    }
-
-    /* Điều khiển */
-    .controls { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); display: flex; gap: 15px; z-index: 10; }
-    button { border: none; border-radius: 50px; cursor: pointer; transition: 0.3s; display: flex; align-items: center; justify-content: center; }
-    button:disabled { opacity: 0.5; cursor: not-allowed; }
-    .start { padding: 15px 40px; background: var(--blue); color: #fff; font-size: 20px; font-weight: bold; box-shadow: 0 4px 15px rgba(33, 150, 243, 0.4); }
-    .review, .reset { width: 55px; height: 55px; background: rgba(255,255,255,0.15); }
-    .review:hover, .reset:hover { background: rgba(255,255,255,0.3); }
-
-    #remain { position: fixed; top: 20px; right: 20px; background: rgba(0,0,0,0.7); padding: 10px 20px; border-radius: 30px; border: 1px solid var(--gold); font-size: 18px; }
-
-    /* Popup Lịch sử */
-    #popup { position: fixed; inset: 0; background: rgba(0,0,0,0.9); display: none; z-index: 100; }
-    .popup-box { max-width: 600px; margin: 10vh auto; background: #1a1a1a; border: 1px solid var(--gold); padding: 30px; border-radius: 20px; max-height: 80vh; overflow: hidden; display: flex; flex-direction: column; }
-    #historyList { overflow-y: auto; margin: 20px 0; flex-grow: 1; text-align: left; }
-    .history-item { padding: 10px; border-bottom: 1px solid #333; color: #00e5ff; font-family: monospace; }
-    .close { padding: 12px; background: #444; color: #fff; width: 100%; margin-top: 10px; }
+body{margin:0;min-height:100vh;background:linear-gradient(rgba(0,0,0,0),rgba(0,0,0,.9)),url(https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEioZd2PmsqVMQJAAzsPXTFXpDrYTm0zqOLMAe9ihkMt1hyphenhyphenndub198Aj6NHksIVNXpY2q1u0VlQXEvqJQQuoWZhBhRBtO1r0pKj1E5obVl9fdbsOpYZ7kMhpUegYmD9MitB3dVx5-vzvONnYC4KdAry4VXo2PwtD-3YN4Ukjz-crJDMn-PokRD-bof0MZ6HR/s1600/xs.webp) center/cover fixed;color:#fff;font-family:'Segoe UI',system-ui}.container{text-align:center;padding:40px}.logo img{height:250px;filter:drop-shadow(0 0 15px gold)}.number-display{position:fixed;inset:0;display:flex;justify-content:center;align-items:center;font-size:240px;font-weight:900;color:#ffd700;letter-spacing:70px;text-shadow:6px 6px 0 #000;transition:.5s;z-index:5}.digit{width:170px;text-align:center}.hidden{opacity:0;transform:scale(.6);pointer-events:none}.numbers-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:26px;max-width:900px;margin:120px auto;opacity:0;transform:scale(.8);transition:.5s}.grid-zoom{opacity:1;transform:scale(1.55)}.number-item{background:rgba(255,215,0,.25);padding:30px 0;border-radius:18px;font-size:50px;font-weight:900;text-align:center}.pop-effect{animation:itemPop .6s cubic-bezier(.175,.885,.32,1.275);box-shadow:0 0 20px #ffd700}@keyframes itemPop{0%{transform:scale(0);opacity:0}60%{transform:scale(1.2)}100%{transform:scale(1)}}.controls{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);display:flex;gap:20px;z-index:10}button{font-size:18px;border:none;border-radius:50px;cursor:pointer}.start{padding:14px 38px;background:#2196f3;color:#fff}.review{width:50px;height:50px;line-height:1px;background:#ffffff1f;color:#000}.reset{width:50px;height:50px;line-height:1px;background:#ffffff1f;color:#fff}#remain{position:fixed;top:20px;right:20px;font-size:20px;background:rgba(0,0,0,.6);padding:10px 20px;border-radius:30px;border:1px solid #ffd700}#popup{position:fixed;inset:0;background:rgba(0,0,0,.95);display:none;z-index:20}.popup-box{max-width:900px;margin:6vh auto;background:#111;border:2px solid #ffd700;padding:30px;border-radius:12px}.history-item{margin-bottom:12px;font-size:20px;color:#00e5ff}.close{padding:14px 38px;margin-top:20px;background:#444;color:#fff}#historyList{overflow:auto;height:300px}
 </style>
 </head>
 <body>
-
 <div class="container">
-    <div class="logo"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi8pHLdb-0jepP85akqsv5ii8RxfctsrBw2m2g9zUCNhGxa9PkhJFoIDzPpfHHn-IV74jthZ92HjxBDGOymu6hJuIbRe5rjOHQW2JGXdkMOu57k6B3O1hVx3TY_smVtjZop2ZMB1fbwCaO3dQ40lCMkamh-Z_UniYStoQ-_ixlXmKJRuax_D5qmW5DyUTZH/s16000/logo11.webp" alt="Logo"></div>
+<div class="logo"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi8pHLdb-0jepP85akqsv5ii8RxfctsrBw2m2g9zUCNhGxa9PkhJFoIDzPpfHHn-IV74jthZ92HjxBDGOymu6hJuIbRe5rjOHQW2JGXdkMOu57k6B3O1hVx3TY_smVtjZop2ZMB1fbwCaO3dQ40lCMkamh-Z_UniYStoQ-_ixlXmKJRuax_D5qmW5DyUTZH/s16000/logo11.webp"></div>
 </div>
-
 <div id="remain">Còn lại: <b id="remainNum">101</b> số</div>
-
-<div class="number-display hidden" id="display">
-    <span class="digit" id="d1">0</span>
-    <span class="digit" id="d2">0</span>
-    <span class="digit" id="d3">0</span>
+<div class="number-display" id="display">
+    <span class="digit" id="d1">0</span>
+    <span class="digit" id="d2">0</span>
+    <span class="digit" id="d3">0</span>
 </div>
-
 <div class="numbers-grid" id="grid"></div>
-
 <div class="controls">
-    <button class="start" id="btnStart" onclick="startSpin()">QUAY SỐ</button>
-    <button class="review" onclick="openPopup()" title="Lịch sử">
-        <svg width="24" height="24" fill="white" viewBox="0 -960 960 960"><path d="M280-600v-80h560v80H280Zm0 160v-80h560v80H280Zm0 160v-80h560v80H280ZM160-600q-17 0-28.5-11.5T120-640q0-17 11.5-28.5T160-680q17 0 28.5 11.5T200-640q0 17-11.5 28.5T160-600Zm0 160q-17 0-28.5-11.5T120-480q0-17 11.5-28.5T160-520q17 0 28.5 11.5T200-480q0 17-11.5 28.5T160-440Zm0 160q-17 0-28.5-11.5T120-320q0-17 11.5-28.5T160-360q17 0 28.5 11.5T200-320q0 17-11.5 28.5T160-280Z"/></svg>
-    </button>
-    <button class="reset" onclick="resetAll()" title="Làm mới">
-        <svg width="24" height="24" fill="white" viewBox="0 -960 960 960"><path d="M480-80q-75 0-140.5-28.5t-114-77q-48.5-48.5-77-114T120-440h80q0 117 81.5 198.5T480-160q117 0 198.5-81.5T760-440q0-117-81.5-198.5T480-720h-6l62 62-56 58-160-160 160-160 56 58-62 62h6q75 0 140.5 28.5t114 77q48.5 48.5 77 114T840-440q0 75-28.5 140.5t-77 114q-48.5 48.5-114 77T480-80Z"/></svg>
-    </button>
+    <button class="start" id="btnStart" onclick="startSpin()">Quay số</button>
+    <button class="review" onclick="openPopup()"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M280-600v-80h560v80H280Zm0 160v-80h560v80H280Zm0 160v-80h560v80H280ZM160-600q-17 0-28.5-11.5T120-640q0-17 11.5-28.5T160-680q17 0 28.5 11.5T200-640q0 17-11.5 28.5T160-600Zm0 160q-17 0-28.5-11.5T120-480q0-17 11.5-28.5T160-520q17 0 28.5 11.5T200-480q0 17-11.5 28.5T160-440Zm0 160q-17 0-28.5-11.5T120-320q0-17 11.5-28.5T160-360q17 0 28.5 11.5T200-320q0 17-11.5 28.5T160-280Z"/></svg></button>
+    <button class="reset" onclick="resetAll()"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M480-80q-75 0-140.5-28.5t-114-77q-48.5-48.5-77-114T120-440h80q0 117 81.5 198.5T480-160q117 0 198.5-81.5T760-440q0-117-81.5-198.5T480-720h-6l62 62-56 58-160-160 160-160 56 58-62 62h6q75 0 140.5 28.5t114 77q48.5 48.5 77 114T840-440q0 75-28.5 140.5t-77 114q-48.5 48.5-114 77T480-80Z"/></svg></button>
 </div>
 
 <div id="popup">
-    <div class="popup-box">
-        <h2 style="color:var(--gold); margin-top:0;">LỊCH SỬ QUAY</h2>
-        <div id="historyList"></div>
-        <button class="close" onclick="closePopup()">Đóng</button>
-    </div>
+    <div class="popup-box">
+        <h2>DANH SÁCH CÁC LƯỢT ĐÃ QUAY</h2>
+        <div id="historyList"></div>
+        <button class="close" onclick="closePopup()">Đóng</button>
+    </div>
 </div>
 
 <script>
-const digits = [document.getElementById('d1'), document.getElementById('d2'), document.getElementById('d3')];
-const display = document.getElementById('display');
-const grid = document.getElementById('grid');
+const digits = [
+    document.getElementById('d1'),
+    document.getElementById('d2'),
+    document.getElementById('d3')
+];
+const display     = document.getElementById('display');
+const grid        = document.getElementById('grid');
 const historyList = document.getElementById('historyList');
-const remainNum = document.getElementById('remainNum');
-const popup = document.getElementById('popup');
-const btnStart = document.getElementById('btnStart');
+const remainNum   = document.getElementById('remainNum');
+const popup       = document.getElementById('popup');
+const btnStart    = document.getElementById('btnStart');
 
-let pool = JSON.parse(localStorage.getItem('spin_pool')) || Array.from({ length: 101 }, (_, i) => String(i + 1).padStart(3, '0'));
+let rolling = false;
+let canSpin = true;
+
+let pool = JSON.parse(localStorage.getItem('spin_pool'));
+if (!pool) {
+    pool = Array.from({ length: 101 }, (_, i) =>
+        String(i + 1).padStart(3, '0')
+    );
+    localStorage.setItem('spin_pool', JSON.stringify(pool));
+}
+
 let history = JSON.parse(localStorage.getItem('spin_history') || '[]');
 remainNum.textContent = pool.length;
 
-function rollAnimation(finalNum, callback) {
-    digits.forEach((digit, i) => {
-        let count = 0;
-        const maxCounts = 20 + i * 8; 
-        const interval = setInterval(() => {
-            digit.textContent = Math.floor(Math.random() * 10);
-            if (++count > maxCounts) {
-                clearInterval(interval);
-                digit.textContent = finalNum[i];
-                if (i === 2) setTimeout(callback, 500);
-            }
-        }, 50);
-    });
+function roll(finalNum, callback) {
+    digits.forEach((digit, i) => {
+        let count = 0;
+        const interval = setInterval(() => {
+            digit.textContent = Math.floor(Math.random() * 10);
+            if (++count > 15 + i * 6) {
+                clearInterval(interval);
+                digit.textContent = finalNum[i];
+                if (i === 2 && callback) {
+                    setTimeout(callback, 400);
+                }
+            }
+        }, 60);
+    });
 }
 
 function startSpin() {
-    if (pool.length === 0) return alert('Đã hết số để quay!');
+    if (!canSpin || rolling) return;
 
-    btnStart.disabled = true;
-    grid.classList.remove('grid-zoom');
-    grid.innerHTML = '';
-    display.classList.remove('hidden');
+    if (pool.length === 0) {
+        alert('Đã quay hết toàn bộ 101 số!');
+        return;
+    }
 
-    const drawCount = Math.min(6, pool.length);
-    const roundResults = [];
+    rolling = true;
+    canSpin = false;
+    btnStart.disabled = true;
+    btnStart.style.opacity = 0.5;
 
-    for (let i = 0; i < drawCount; i++) {
-        const randomIndex = Math.floor(Math.random() * pool.length);
-        roundResults.push(pool.splice(randomIndex, 1)[0]);
-    }
+    grid.innerHTML = '';
+    grid.classList.remove('grid-zoom');
+    display.classList.remove('hidden');
 
-    // Lấy số cuối cùng để làm hiệu ứng đại diện trên màn hình lớn
-    const representativeNum = roundResults[roundResults.length - 1];
+    const drawCount = Math.min(6, pool.length);
+    const result = [];
 
-    rollAnimation(representativeNum, () => {
-        history.push(roundResults);
-        saveData();
-        
-        display.classList.add('hidden');
-        grid.classList.add('grid-zoom');
+    for (let i = 0; i < drawCount; i++) {
+        const index = Math.floor(Math.random() * pool.length);
+        result.push(pool.splice(index, 1)[0]);
+    }
 
-        roundResults.forEach((num, i) => {
-            setTimeout(() => {
-                const div = document.createElement('div');
-                div.className = 'number-item pop-effect';
-                div.textContent = num;
-                grid.appendChild(div);
+    roll(result[result.length - 1], () => {
 
-                if (i === roundResults.length - 1) {
-                    btnStart.disabled = false;
-                }
-            }, i * 150);
-        });
-    });
-}
+        history.push(result);
+        localStorage.setItem('spin_history', JSON.stringify(history));
+        localStorage.setItem('spin_pool', JSON.stringify(pool));
+        remainNum.textContent = pool.length;
 
-function saveData() {
-    localStorage.setItem('spin_pool', JSON.stringify(pool));
-    localStorage.setItem('spin_history', JSON.stringify(history));
-    remainNum.textContent = pool.length;
+        display.classList.add('hidden');
+        grid.classList.add('grid-zoom');
+
+        result.forEach((num, i) => {
+            setTimeout(() => {
+                const div = document.createElement('div');
+                div.className = 'number-item pop-effect';
+                div.textContent = num;
+                grid.appendChild(div);
+
+                if (i === result.length - 1) {
+                    setTimeout(() => {
+                        rolling = false;
+                        canSpin = true;
+                        btnStart.disabled = false;
+                        btnStart.style.opacity = 1;
+                    }, 400);
+                }
+
+            }, i * 120);
+        });
+    });
 }
 
 function openPopup() {
-    historyList.innerHTML = history.length ? '' : '<p>Chưa có lượt quay nào.</p>';
-    history.forEach((res, i) => {
-        const div = document.createElement('div');
-        div.className = 'history-item';
-        div.textContent = `Lượt ${i + 1}: ${res.join(' - ')}`;
-        historyList.prepend(div); // Hiện lượt mới nhất lên đầu
-    });
-    popup.style.display = 'block';
+    historyList.innerHTML = '';
+    history.forEach((list, i) => {
+        const div = document.createElement('div');
+        div.className = 'history-item';
+        div.textContent = `Lượt ${i + 1} (${list.length} số): ${list.join(' - ')}`;
+        historyList.appendChild(div);
+    });
+    popup.style.display = 'block';
 }
 
-function closePopup() { popup.style.display = 'none'; }
+function closePopup() {
+    popup.style.display = 'none';
+}
 
 function resetAll() {
-    if (confirm('Bạn có chắc chắn muốn xóa toàn bộ lịch sử và làm lại từ đầu?')) {
-        localStorage.clear();
-        location.reload();
-    }
+    if (confirm('Bạn chắc chắn muốn RESET toàn bộ danh sách?')) {
+        localStorage.removeItem('spin_pool');
+        localStorage.removeItem('spin_history');
+        location.reload();
+    }
 }
 </script>
 </body>
