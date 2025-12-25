@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="vi">
 <head>
 <meta charset="UTF-8">
@@ -13,145 +14,145 @@ body{margin:0;min-height:100vh;background:linear-gradient(rgba(0,0,0,0),rgba(0,0
 </div>
 <div id="remain">Còn lại: <b id="remainNum">101</b> số</div>
 <div class="number-display" id="display">
-    <span class="digit" id="d1">0</span>
-    <span class="digit" id="d2">0</span>
-    <span class="digit" id="d3">0</span>
+    <span class="digit" id="d1">0</span>
+    <span class="digit" id="d2">0</span>
+    <span class="digit" id="d3">0</span>
 </div>
 <div class="numbers-grid" id="grid"></div>
 <div class="controls">
-    <button class="start" id="btnStart" onclick="startSpin()">Quay số</button>
-    <button class="review" onclick="openPopup()"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M280-600v-80h560v80H280Zm0 160v-80h560v80H280Zm0 160v-80h560v80H280ZM160-600q-17 0-28.5-11.5T120-640q0-17 11.5-28.5T160-680q17 0 28.5 11.5T200-640q0 17-11.5 28.5T160-600Zm0 160q-17 0-28.5-11.5T120-480q0-17 11.5-28.5T160-520q17 0 28.5 11.5T200-480q0 17-11.5 28.5T160-440Zm0 160q-17 0-28.5-11.5T120-320q0-17 11.5-28.5T160-360q17 0 28.5 11.5T200-320q0 17-11.5 28.5T160-280Z"/></svg></button>
-    <button class="reset" onclick="resetAll()"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M480-80q-75 0-140.5-28.5t-114-77q-48.5-48.5-77-114T120-440h80q0 117 81.5 198.5T480-160q117 0 198.5-81.5T760-440q0-117-81.5-198.5T480-720h-6l62 62-56 58-160-160 160-160 56 58-62 62h6q75 0 140.5 28.5t114 77q48.5 48.5 77 114T840-440q0 75-28.5 140.5t-77 114q-48.5 48.5-114 77T480-80Z"/></svg></button>
+    <button class="start" id="btnStart" onclick="startSpin()">Quay số</button>
+    <button class="review" onclick="openPopup()"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M280-600v-80h560v80H280Zm0 160v-80h560v80H280Zm0 160v-80h560v80H280ZM160-600q-17 0-28.5-11.5T120-640q0-17 11.5-28.5T160-680q17 0 28.5 11.5T200-640q0 17-11.5 28.5T160-600Zm0 160q-17 0-28.5-11.5T120-480q0-17 11.5-28.5T160-520q17 0 28.5 11.5T200-480q0 17-11.5 28.5T160-440Zm0 160q-17 0-28.5-11.5T120-320q0-17 11.5-28.5T160-360q17 0 28.5 11.5T200-320q0 17-11.5 28.5T160-280Z"/></svg></button>
+    <button class="reset" onclick="resetAll()"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M480-80q-75 0-140.5-28.5t-114-77q-48.5-48.5-77-114T120-440h80q0 117 81.5 198.5T480-160q117 0 198.5-81.5T760-440q0-117-81.5-198.5T480-720h-6l62 62-56 58-160-160 160-160 56 58-62 62h6q75 0 140.5 28.5t114 77q48.5 48.5 77 114T840-440q0 75-28.5 140.5t-77 114q-48.5 48.5-114 77T480-80Z"/></svg></button>
 </div>
 
 <div id="popup">
-    <div class="popup-box">
-        <h2>DANH SÁCH CÁC LƯỢT ĐÃ QUAY</h2>
-        <div id="historyList"></div>
-        <button class="close" onclick="closePopup()">Đóng</button>
-    </div>
+    <div class="popup-box">
+        <h2>DANH SÁCH CÁC LƯỢT ĐÃ QUAY</h2>
+        <div id="historyList"></div>
+        <button class="close" onclick="closePopup()">Đóng</button>
+    </div>
 </div>
 
 <script>
 const digits = [
-    document.getElementById('d1'),
-    document.getElementById('d2'),
-    document.getElementById('d3')
+    document.getElementById('d1'),
+    document.getElementById('d2'),
+    document.getElementById('d3')
 ];
-const display     = document.getElementById('display');
-const grid        = document.getElementById('grid');
+const display     = document.getElementById('display');
+const grid        = document.getElementById('grid');
 const historyList = document.getElementById('historyList');
-const remainNum   = document.getElementById('remainNum');
-const popup       = document.getElementById('popup');
-const btnStart    = document.getElementById('btnStart');
+const remainNum   = document.getElementById('remainNum');
+const popup       = document.getElementById('popup');
+const btnStart    = document.getElementById('btnStart');
 
 let rolling = false;
 let canSpin = true;
 
 let pool = JSON.parse(localStorage.getItem('spin_pool'));
 if (!pool) {
-    pool = Array.from({ length: 101 }, (_, i) =>
-        String(i + 1).padStart(3, '0')
-    );
-    localStorage.setItem('spin_pool', JSON.stringify(pool));
+    pool = Array.from({ length: 101 }, (_, i) =>
+        String(i + 1).padStart(3, '0')
+    );
+    localStorage.setItem('spin_pool', JSON.stringify(pool));
 }
 
 let history = JSON.parse(localStorage.getItem('spin_history') || '[]');
 remainNum.textContent = pool.length;
 
 function roll(finalNum, callback) {
-    digits.forEach((digit, i) => {
-        let count = 0;
-        const interval = setInterval(() => {
-            digit.textContent = Math.floor(Math.random() * 10);
-            if (++count > 15 + i * 6) {
-                clearInterval(interval);
-                digit.textContent = finalNum[i];
-                if (i === 2 && callback) {
-                    setTimeout(callback, 400);
-                }
-            }
-        }, 60);
-    });
+    digits.forEach((digit, i) => {
+        let count = 0;
+        const interval = setInterval(() => {
+            digit.textContent = Math.floor(Math.random() * 10);
+            if (++count > 15 + i * 6) {
+                clearInterval(interval);
+                digit.textContent = finalNum[i];
+                if (i === 2 && callback) {
+                    setTimeout(callback, 400);
+                }
+            }
+        }, 60);
+    });
 }
 
 function startSpin() {
-    if (!canSpin || rolling) return;
+    if (!canSpin || rolling) return;
 
-    if (pool.length === 0) {
-        alert('Đã quay hết toàn bộ 101 số!');
-        return;
-    }
+    if (pool.length === 0) {
+        alert('Đã quay hết toàn bộ 101 số!');
+        return;
+    }
 
-    rolling = true;
-    canSpin = false;
-    btnStart.disabled = true;
-    btnStart.style.opacity = 0.5;
+    rolling = true;
+    canSpin = false;
+    btnStart.disabled = true;
+    btnStart.style.opacity = 0.5;
 
-    grid.innerHTML = '';
-    grid.classList.remove('grid-zoom');
-    display.classList.remove('hidden');
+    grid.innerHTML = '';
+    grid.classList.remove('grid-zoom');
+    display.classList.remove('hidden');
 
-    const drawCount = Math.min(6, pool.length);
-    const result = [];
+    const drawCount = Math.min(6, pool.length);
+    const result = [];
 
-    for (let i = 0; i < drawCount; i++) {
-        const index = Math.floor(Math.random() * pool.length);
-        result.push(pool.splice(index, 1)[0]);
-    }
+    for (let i = 0; i < drawCount; i++) {
+        const index = Math.floor(Math.random() * pool.length);
+        result.push(pool.splice(index, 1)[0]);
+    }
 
-    roll(result[result.length - 1], () => {
+    roll(result[result.length - 1], () => {
 
-        history.push(result);
-        localStorage.setItem('spin_history', JSON.stringify(history));
-        localStorage.setItem('spin_pool', JSON.stringify(pool));
-        remainNum.textContent = pool.length;
+        history.push(result);
+        localStorage.setItem('spin_history', JSON.stringify(history));
+        localStorage.setItem('spin_pool', JSON.stringify(pool));
+        remainNum.textContent = pool.length;
 
-        display.classList.add('hidden');
-        grid.classList.add('grid-zoom');
+        display.classList.add('hidden');
+        grid.classList.add('grid-zoom');
 
-        result.forEach((num, i) => {
-            setTimeout(() => {
-                const div = document.createElement('div');
-                div.className = 'number-item pop-effect';
-                div.textContent = num;
-                grid.appendChild(div);
+        result.forEach((num, i) => {
+            setTimeout(() => {
+                const div = document.createElement('div');
+                div.className = 'number-item pop-effect';
+                div.textContent = num;
+                grid.appendChild(div);
 
-                if (i === result.length - 1) {
-                    setTimeout(() => {
-                        rolling = false;
-                        canSpin = true;
-                        btnStart.disabled = false;
-                        btnStart.style.opacity = 1;
-                    }, 400);
-                }
+                if (i === result.length - 1) {
+                    setTimeout(() => {
+                        rolling = false;
+                        canSpin = true;
+                        btnStart.disabled = false;
+                        btnStart.style.opacity = 1;
+                    }, 400);
+                }
 
-            }, i * 120);
-        });
-    });
+            }, i * 120);
+        });
+    });
 }
 
 function openPopup() {
-    historyList.innerHTML = '';
-    history.forEach((list, i) => {
-        const div = document.createElement('div');
-        div.className = 'history-item';
-        div.textContent = `Lượt ${i + 1} (${list.length} số): ${list.join(' - ')}`;
-        historyList.appendChild(div);
-    });
-    popup.style.display = 'block';
+    historyList.innerHTML = '';
+    history.forEach((list, i) => {
+        const div = document.createElement('div');
+        div.className = 'history-item';
+        div.textContent = `Lượt ${i + 1} (${list.length} số): ${list.join(' - ')}`;
+        historyList.appendChild(div);
+    });
+    popup.style.display = 'block';
 }
 
 function closePopup() {
-    popup.style.display = 'none';
+    popup.style.display = 'none';
 }
 
 function resetAll() {
-    if (confirm('Bạn chắc chắn muốn RESET toàn bộ danh sách?')) {
-        localStorage.removeItem('spin_pool');
-        localStorage.removeItem('spin_history');
-        location.reload();
-    }
+    if (confirm('Bạn chắc chắn muốn RESET toàn bộ danh sách?')) {
+        localStorage.removeItem('spin_pool');
+        localStorage.removeItem('spin_history');
+        location.reload();
+    }
 }
 </script>
 </body>
